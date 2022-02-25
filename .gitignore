@@ -1,0 +1,10 @@
+# hidden macOS fles
+
+.DS_Store
+.Rhistory
+
+# sub-directories not to track
+
+raw/
+
+# exceptions
