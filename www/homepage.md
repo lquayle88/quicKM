@@ -14,3 +14,5 @@ quicKM can calculate an integrated expression value for multiple input genes pri
 - Fully **downloadable data files** at each stage of analysis
 
 Please report any issues or feature requests to: devs.quickm.app@gmail.com
+
+For a general citation of quicKM, please use: ORDA DOI
