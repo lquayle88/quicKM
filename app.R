@@ -21,15 +21,9 @@ library("summaryBox")
 library("tidyr")
 
 
-## specify paths
+## load data
 
-# app directory
-
-app_dir <- file.path("~", "Documents", "Bioinformatics", "bioinformatics_projects", "quickm_dev")
-
-# load data
-
-load(file.path(app_dir, "data", "breast", "tcga_brca", "processed", "tcga_brca.RData"))
+load(file.path("www", "tcga_brca.RData"))
 
 
 ## define utility functions
