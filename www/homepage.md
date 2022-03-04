@@ -15,4 +15,4 @@ quicKM can calculate an integrated expression value for multiple input genes pri
 
 Please report any issues or feature requests to: devs.quickm.app@gmail.com
 
-For a general citation of quicKM please use: Quayle, Lewis (2022), QuicKM: An Online Tool for Speedy Survival Analysis. Available at https://figshare.shef.ac.uk/articles/online_resource/quicKM_an_online_tool_for_speedy_survival_analysis/19236744/1 [doi.org/10.15131/shef.data.19236744.v1](https://figshare.shef.ac.uk/articles/online_resource/quicKM_an_online_tool_for_speedy_survival_analysis/19236744/1)
+For a general citation of quicKM please use: Quayle, Lewis (2022), quicKM: an online tool for speedy survival analysis. Available at: [doi.org/10.15131/shef.data.19236744](https://figshare.shef.ac.uk/articles/online_resource/quicKM_an_online_tool_for_speedy_survival_analysis/19236744)

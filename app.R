@@ -1,6 +1,6 @@
 ## quicKM web app
 ## Lewis Quayle
-## 25/01/2022
+## 21/01/2022
 
 
 ### GLOBAL
@@ -21,9 +21,15 @@ library("summaryBox")
 library("tidyr")
 
 
-## load data
+## specify paths
 
-load(file.path("www", "tcga_brca.RData"))
+# app directory
+
+app_dir <- file.path("~", "Documents", "Bioinformatics", "bioinformatics_projects", "quickm_dev")
+
+# load data
+
+load(file.path(app_dir, "data", "breast", "tcga_brca", "processed", "tcga_brca.RData"))
 
 
 ## define utility functions
@@ -45,7 +51,7 @@ filter_count_data <- function(clinical.data, expr.data, annotation, genes.input)
   
   # create a character vector used to filter count data rows
   
-  if(genes.input == "") {
+  if (genes.input == "") {
     
     genes <- NULL
     
@@ -61,8 +67,8 @@ filter_count_data <- function(clinical.data, expr.data, annotation, genes.input)
   # filter gene level expression data
   
   expr.data %>%
-      dplyr::select(ensembl, entrez, symbol, all_of(case.ids)) %>%
-      dplyr::filter(get(annotation) %in% genes)
+    dplyr::select(ensembl, entrez, symbol, all_of(case.ids)) %>%
+    dplyr::filter(get(annotation) %in% genes)
   
 }
 
@@ -79,7 +85,7 @@ calc_geo_mean <- function(x) {
 
 # generate survival data frame
 
-generate_survival_data <- function(clinical.data, expr.data, split.cohort) {
+generate_survival_data <- function(clinical.data, expr.data, split.cohort, censor.threshold, threshold) {
   
   # only calculate with data frame resulting from valid genes input
   
@@ -91,9 +97,9 @@ generate_survival_data <- function(clinical.data, expr.data, split.cohort) {
     dplyr::select(-c(ensembl, entrez, symbol))
   
   # extract vector of expression values for a single gene or compute the geometric mean for multiple genes
-
+  
   expr.value <- sapply(expr.data, FUN = calc_geo_mean)
-
+  
   # create the data frame used in survival analysis
   
   surv.data <- data.frame("case.id" = names(expr.value),
@@ -116,7 +122,22 @@ generate_survival_data <- function(clinical.data, expr.data, split.cohort) {
   
   # binary stratum classifier variable
   
-  mutate(surv.data, stratum = ifelse(surv.data$expr.value <= cutoff, 0, 1))
+  surv.data <- surv.data %>%
+    mutate(stratum = ifelse(surv.data$expr.value < cutoff, 0, 1))
+  
+  # define follow-up period
+  
+  if (censor.threshold) {
+    
+    surv.data %>%
+      mutate(os_status = ifelse(os_time <= threshold, os_status, 0))
+    
+  } else {
+    
+    surv.data %>%
+      dplyr::filter(os_time <= threshold)
+    
+  }
   
 }
 
@@ -164,7 +185,7 @@ plot_clinical_mvar <- function(data, x.var, grp.var, x.lab, grp.lab) {
 
 # survival analysis plot
 
-plot_survival <- function(data, title, pval, conf.int, censor, surv.median.line) {
+plot_survival <- function(data, title, pval, conf.int, censor, surv.median.line, threshold) {
   
   # custom plot theme
   
@@ -215,7 +236,7 @@ plot_survival <- function(data, title, pval, conf.int, censor, surv.median.line)
                         palette = c("#053061", "#E41A1C"),
                         axes.offset = TRUE,
                         break.time.by = 1,
-                        xlim = c(0, 16),
+                        xlim = c(0, threshold),
                         ylim = c(0, 1),
                         break.y.by = 0.10,
                         title = title,
@@ -236,7 +257,7 @@ plot_survival <- function(data, title, pval, conf.int, censor, surv.median.line)
                         fontsize = 4,
                         palette = c("#053061", "#E41A1C"),
                         break.time.by = 1,
-                        xlim = c(0, 16),
+                        xlim = c(0, threshold),
                         xlab = "Time (Years)",
                         risk.table.title = "Number at Risk",
                         legend.title = "",
@@ -308,7 +329,7 @@ ui <- navbarPage(
                                    sidebarPanel(
                                      
                                      pickerInput(inputId = "race_tcga_brca",
-                                                 label = "Race:",
+                                                 label = "Race or Ethnicity:",
                                                  choices = levels(tcga_brca_clinical$race),
                                                  multiple = TRUE,
                                                  options = list(title = "select one or more")),
@@ -416,6 +437,29 @@ ui <- navbarPage(
                                                  choices = c("lower quartile", "median", "upper quartile"),
                                                  selected = "median"),
                                      
+                                     fluidRow(
+                                       column(width = 10,
+                                              style = "display:inline-block;vertical-align:top",
+                                              sliderInput(inputId = "define_time_tcga_brca",
+                                                 label = "Follow-Up Threshold:",
+                                                 min = 2,
+                                                 max = floor(max(tcga_brca_clinical$os_time)),
+                                                 step = 1,
+                                                 value = floor(max(tcga_brca_clinical$os_time)))),
+                                       
+                                       column(width = 2,
+                                              style = "display:inline-block;vertical-align:top",
+                                              circleButton(inputId = "followup_help_tcga_brca",
+                                                           size = "xs",
+                                                           color = "primary",
+                                                           icon = icon("question")))
+                                       ),
+
+                                     materialSwitch(inputId = "censor_threshold_tcga_brca",
+                                                    label = "Censor at Threshold:", 
+                                                    value = TRUE,
+                                                    status = "primary"),
+                                     
                                      textInput(inputId = "plot_title_tcga_brca",
                                                label = "Plot Title:",
                                                width = "100%"),
@@ -449,7 +493,7 @@ ui <- navbarPage(
                                        column(6, uiOutput("dl_2_tcga_brca")),
                                        column(6, uiOutput("dl_3_tcga_brca"))
                                      ),
-
+                                     
                                      uiOutput("dl_4_tcga_brca")
                                      
                                    ), # end sidebarPanel
@@ -917,6 +961,17 @@ server <- function(input, output) {
     )
     
   })
+
+  ## follow-up threshold help modal
+  
+  observeEvent(input$followup_help_tcga_brca, {
+    
+    showModal(modalDialog(title = "quicKM Help",
+                          includeMarkdown(file.path("www", "help_followup.md")),
+                          easyClose = TRUE)
+    )
+    
+  })
   
   
   ## create survival analysis data frame
@@ -925,7 +980,9 @@ server <- function(input, output) {
     
     generate_survival_data(clinical.data = clinical_selection(),
                            expr.data = counts_selection(),
-                           split.cohort = isolate(input$define_cutoff_tcga_brca))
+                           split.cohort = isolate(input$define_cutoff_tcga_brca),
+                           censor.threshold = isolate(input$censor_threshold_tcga_brca),
+                           threshold = isolate(input$define_time_tcga_brca))
     
   })
   
@@ -941,7 +998,8 @@ server <- function(input, output) {
                   pval = isolate(input$show_pval_tcga_brca),
                   conf.int = isolate(input$show_conf_tcga_brca),
                   censor = isolate(input$censor_tcga_brca),
-                  surv.median.line = isolate(input$med_surv_line_tcga_brca))
+                  surv.median.line = isolate(input$med_surv_line_tcga_brca),
+                  threshold = isolate(input$define_time_tcga_brca))
     
   })
   
@@ -957,10 +1015,10 @@ server <- function(input, output) {
   height = 700
   
   )
-
-
+  
+  
   ## expression data download
-
+  
   output$download_expr_data_tcga_brca <- downloadHandler(
     
     filename = function() {
@@ -982,8 +1040,8 @@ server <- function(input, output) {
                    style = "width:100%;margin-top:1em")
     
   })
-
-
+  
+  
   ## survival analysis data download
   
   output$download_surv_data_tcga_brca <- downloadHandler(
@@ -1007,8 +1065,8 @@ server <- function(input, output) {
                    style = "width:100%;margin-top:1em")
     
   })
-
-
+  
+  
   ## survival analysis KM plot download
   
   output$download_surv_plot_tcga_brca <- downloadHandler(
@@ -1051,3 +1109,4 @@ server <- function(input, output) {
 ## RUN APP
 
 shinyApp(ui, server)
+
