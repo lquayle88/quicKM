@@ -1,6 +1,6 @@
 # quicKM
 
-[**quicKM**](http://www.quickm.org) is an online application offering **rapid and user-friendly analysis** of **pre-curated open-access RNA sequencing data** and corresponding **clinical case files**.
+[**quicKM**](http://quickm.org) is an online application offering **rapid and user-friendly analysis** of **pre-curated open-access RNA sequencing data** and corresponding **clinical case files**.
 
 The quicKM **survival analysis plotting tool** is able to establish the correlation between expression of **over 30,000 genes** and patient survival across the **"big four" cancers**, including **breast**, **prostate**, **lung** and **colon cancer**. The primary purpose of the tool is a meta-analysis based **discovery and validation of survival biomarkers**.
 
