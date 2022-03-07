@@ -2,9 +2,9 @@
 
 ### Lewis Quayle, Ph.D.
 
-Lewis completed his Ph.D. in the Department of Oncology and Metabolism at the University of Sheffield in November 2017. He is currently a post-doctoral research associate working on a project integrating bioinformatics, molecular biology and cell biology to define molecular drivers of mitotic quiescence and dormancy in breast cancer. Dr Quayle is currently funded by [Against Breast Cancer](https://www.againstbreastcancer.org.uk/) and [Weston Park Cancer Charity](https://www.westonpark.org.uk/).
+Lewis completed his Ph.D. in the Department of Oncology and Metabolism at the University of Sheffield in November 2017. He is currently a post-doctoral research associate working on a project integrating bioinformatics, molecular biology and cell biology to define molecular drivers of mitotic quiescence and dormancy in breast cancer. Dr Quayle is currently funded by <a href="https://www.againstbreastcancer.org.uk/" target="_blank">Against Breast Cancer</a> and <a href="https://www.westonpark.org.uk/" target="_blank">Weston Park Cancer Charity</a>.
 
-An up-to-date list of publications authored by Dr Quayle can be found [here](https://www.sheffield.ac.uk/medicine/people/oncology-metabolism/lewis-quayle).
+An up-to-date list of publications authored by Dr Quayle can be found <a href="https://www.sheffield.ac.uk/medicine/people/oncology-metabolism/lewis-quayle" target="_blank">here</a>.
 
 Dr Quayle is a member of:
 

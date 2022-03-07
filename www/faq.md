@@ -2,10 +2,10 @@
 
 All raw data sets used on this site are publicly available:
 
-- TCGA project data sets can be found at the National Cancer Institute [Genomic Data Commons Data Portal](https://portal.gdc.cancer.gov/)
-- METABRIC ([Pereira _et al._ Nat Commun 2016](https://pubmed.ncbi.nlm.nih.gov/27161491/)) is available at [cBioPortal](https://www.cbioportal.org/study/summary?id=brca_metabric).
+- TCGA project data sets can be found at the National Cancer Institute <a href="https://portal.gdc.cancer.gov/" target="_blank">Genomic Data Commons Data Portal</a>.
+- METABRIC (<a href="https://pubmed.ncbi.nlm.nih.gov/27161491/" target="_blank">Pereira _et al._ Nat Commun 2016</a>) is available at <a href="https://www.cbioportal.org/study/summary?id=brca_metabric" target="_blank">cBioPortal</a>.
 
-Each data set has been downloaded from the respective source as raw clinical XML or HTSEQ transcript count data files, compiled into data tables and then manually curated. Raw HTSEQ counts have been transformed log<sub>2</sub>(x + 1) and normalised with respect to library size and sequencing depth using the variance stabilising transformation functionality of [DESeq2](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
+Each data set has been downloaded from the respective source as raw clinical XML or HTSEQ transcript count data files, compiled into data tables and then manually curated. Raw HTSEQ counts have been transformed log<sub>2</sub>(x + 1) and normalised with respect to library size and sequencing depth using the variance stabilising transformation functionality of <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank">DESeq2</a>.
 
 ### **What is the treatment status of patients in the clinical cohorts?**
 
