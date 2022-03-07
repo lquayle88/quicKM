@@ -17,4 +17,4 @@ Dr Quayle is a member of:
 
 Elliott holds a B.Sc. in Computer Studies and has accrued over 30 years expertise in the field of database construction and management, as well as extensive IT technical support experience working within the NHS.
 
-Having retired in 2014, Elliott spent much of his time involved in charity support and fund-raising. Since meeting Dr Quayle at a charity event in 2019, Elliott has been volunteering his IT expertise to become a driving force behind the realisation of the quicKM concept, being responsible for data acquisition, data curation and site testing.
+Having retired in 2014, Elliott spent much of his time involved in charity support and fund-raising. Since meeting Dr Quayle at a charity event in 2019, Elliott has been volunteering his IT expertise to become a driving force behind the realisation of the quicKM concept, being responsible for data curation and site testing.

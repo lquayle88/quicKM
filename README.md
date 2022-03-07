@@ -1,4 +1,4 @@
-# quicKM
+# quicKM: an online tool for speedy survival analysis
 
 [**quicKM**](http://quickm.org) is an online application offering **rapid and user-friendly analysis** of **pre-curated open-access RNA sequencing data** and corresponding **clinical case files**.
 
@@ -15,4 +15,4 @@ quicKM can calculate an integrated expression value for multiple input genes pri
 
 Please report any issues or feature requests to: devs.quickm.app@gmail.com
 
-For a general citation of quicKM please use: Quayle, Lewis (2022), quicKM: an online tool for speedy survival analysis. Available at doi.org/10.15131/shef.data.19236744
+For a general citation of quicKM please use: Quayle, Lewis (2022), quicKM: an online tool for speedy survival analysis. Available at: doi.org/10.15131/shef.data.19236744
